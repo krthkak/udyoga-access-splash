@@ -1,0 +1,529 @@
+// Enums
+enum Gender {
+  male
+  female
+  others
+}
+
+enum InstitutionStatus {
+  verified
+  unverified
+}
+
+enum CandidateStatus {
+  verified
+  unverified
+}
+
+enum EntityStatus {
+  approved
+  active
+  rejected
+  pending
+  inactive
+}
+
+enum DocumentType {
+  JD
+  certificate
+  resume
+}
+
+enum ActivityType {
+  GD
+  interview
+  seminar
+  course
+}
+
+enum ActivityCategory {
+  Independent
+  PartOfDrive
+}
+
+enum PaymentStatus {
+  successful
+  refunded
+  pending
+}
+
+enum TransactionType {
+  onboarding
+  drive
+  activity
+}
+
+enum AudienceTypeName {
+  Institution
+  Public
+}
+
+enum EnrollmentStatus {
+  enrolled
+  completed
+  dropped
+  in_progress
+  failed
+  passed
+}
+
+enum DriveActivityType {
+  STAGE
+  PREREQUISITE
+}
+
+// Core Models
+
+model Candidate {
+  id                   String          @id @default(uuid())
+  user_id              String          @unique
+  student_id           String          @unique
+  status               CandidateStatus @default(unverified)
+  age                  Int
+  gender               Gender
+  institution_id       String
+  department_id        String
+  semester             Int
+  bio                  String?
+  resume               String? // FK to Document.id
+  additional_documents String[] // Array of Document.id
+  cgpa                 Float?
+  hobbies              String[] // Array of Hobby.id
+  certifications       String[] // Array of Document.id
+  created_date         DateTime?       @default(now()) @db.Timestamp(6)
+  updated_date         DateTime?       @default(now()) @db.Timestamp(6)
+
+  // Relations
+  user                 User                @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  institution          Institution         @relation(fields: [institution_id], references: [id])
+  department           Department          @relation(fields: [department_id], references: [id])
+  candidate_activities CandidateActivity[]
+  candidate_drives     CandidateDrive[]
+  candidate_payment    CandidatePayment[]
+
+  @@map("candidate")
+}
+
+model Institution {
+  id                    String            @id @default(uuid())
+  name                  String
+  city                  String?
+  state                 String?
+  status                InstitutionStatus @default(unverified)
+  created_date          DateTime?         @default(now()) @db.Timestamp(6)
+  updated_date          DateTime?         @default(now()) @db.Timestamp(6)
+  contact_person        String?
+  contact_phone_details String?
+
+  // Relations
+  institution_activities InstitutionActivity[]
+  institution_drives     InstitutionDrive[]
+  candidates             Candidate[]
+
+  @@map("institution")
+}
+
+model Department {
+  id           String    @id @default(uuid())
+  name         String
+  short_name   String    @unique
+  full_name    String
+  desc         String?
+  created_date DateTime? @default(now()) @db.Timestamp(6)
+  updated_date DateTime? @default(now()) @db.Timestamp(6)
+
+  // Relations
+  candidates Candidate[]
+  activities Activity[]  @relation("ActivityDepartments")
+  drives     Drive[]     @relation("DriveDepartments")
+
+  @@map("department")
+}
+
+model Drive {
+  id                  String       @id @default(uuid())
+  name                String
+  description         String
+  company_name        String       @default("company_name")
+  available_positions Int
+  company_details     String
+  requirements        String // RichText as String
+  keypoints           String[] // Array of key points
+  image               String // FK to Document.id (mandatory)
+  documents           String[] // Array of Document.id
+  applies             String[] // Array of AudienceType.id
+  created_date        DateTime?    @default(now()) @db.Timestamp(6)
+  updated_date        DateTime?    @default(now()) @db.Timestamp(6)
+  status              EntityStatus @default(active)
+  tag                 String?
+  baseprice           Decimal
+  departments         Department[] @relation("DriveDepartments")
+  bg_color      String?
+
+  allowed_sem       Int?
+  cgpa_greater_than Float?
+
+  // Relations
+  drive_activities     DriveActivity[]
+  institution_drives   InstitutionDrive[]
+  candidate_drives     CandidateDrive[]
+  candidate_activities CandidateActivity[]
+  drive_payment        CandidatePayment[]
+
+  @@map("drive")
+}
+
+model Activity {
+  id            String            @id @default(uuid())
+  name          String
+  description   String
+  internal_name String
+  type          ActivityType
+  tag           String?
+  category      ActivityCategory?
+  bg_color      String?
+  external_url  String?
+  details       String // RichText as String
+  keypoints     String[] // Array of key points
+  image         String // FK to Document.id (mandatory)
+  documents     String[] // Array of Document.id
+  applies       String[] // Array of AudienceType.id
+  baseprice     Decimal           @db.Decimal(10, 2)
+  created_date  DateTime?         @default(now()) @db.Timestamp(6)
+  updated_date  DateTime?         @default(now()) @db.Timestamp(6)
+  status        EntityStatus      @default(active)
+
+  allowed_sem       Int?
+  cgpa_greater_than Float?
+  departments       Department[] @relation("ActivityDepartments")
+
+  // Relations
+  drive_activities       DriveActivity[]
+  institution_activities InstitutionActivity[]
+  candidate_activities   CandidateActivity[]
+  activity_payment       CandidatePayment[]
+
+  @@map("activity")
+}
+
+model Payment {
+  id                  String          @id @default(uuid())
+  amount              Decimal         @db.Decimal(10, 2)
+  currency            String          @default("INR")
+  provider            String? // e.g. "razorpay"
+  provider_order_id   String?         @unique
+  provider_payment_id String?         @unique
+  provider_signature  String?
+  // Raw provider response for reconciliation and debugging
+  provider_response   Json?
+  // Optional idempotency key used when creating provider orders to avoid duplicates
+  idempotency_key     String?
+  receipt             String?
+  notes               Json?
+  fee                 Decimal?        @db.Decimal(10, 2)
+  tax                 Decimal?        @db.Decimal(10, 2)
+  payment_status      PaymentStatus
+  payment_mode        String
+  transaction_type    TransactionType
+  created_date        DateTime?       @default(now()) @db.Timestamp(6)
+  updated_date        DateTime?       @default(now()) @db.Timestamp(6)
+
+  // Relations
+  // Payment stores only gateway/provider details. Lookups to domain entities live in CandidatePayment.
+  candidate_payment CandidatePayment[]
+
+  @@map("payment")
+}
+
+model Document {
+  id            String       @id @default(uuid())
+  document_type DocumentType
+  file_type     String
+  file_url      String
+  created_date  DateTime?    @default(now()) @db.Timestamp(6)
+  updated_date  DateTime?    @default(now()) @db.Timestamp(6)
+
+  @@map("document")
+}
+
+model AudienceType {
+  id           String           @id @default(uuid())
+  name         AudienceTypeName
+  created_date DateTime?        @default(now()) @db.Timestamp(6)
+  updated_date DateTime?        @default(now()) @db.Timestamp(6)
+
+  @@map("audience_type")
+}
+
+model DriveActivity {
+  id                String            @id @default(uuid())
+  drive_id          String
+  activity_id       String
+  is_required       Boolean           @default(false)
+  allowed_sem       Int?
+  cgpa_greater_than Float?
+  baseprice         Decimal           @db.Decimal(10, 2)
+  created_date      DateTime?         @default(now()) @db.Timestamp(6)
+  updated_date      DateTime?         @default(now()) @db.Timestamp(6)
+  status            EntityStatus      @default(active)
+  type              DriveActivityType
+
+  // Relations
+  drive    Drive    @relation(fields: [drive_id], references: [id])
+  activity Activity @relation(fields: [activity_id], references: [id])
+
+  @@map("drive_activity")
+}
+
+model InstitutionActivity {
+  id                String       @id @default(uuid())
+  institution_id    String
+  activity_id       String
+  is_required       Boolean      @default(false)
+  allowed_sem       Int?
+  cgpa_greater_than Float?
+  baseprice         Decimal      @db.Decimal(10, 2)
+  created_date      DateTime?    @default(now()) @db.Timestamp(6)
+  updated_date      DateTime?    @default(now()) @db.Timestamp(6)
+  status            EntityStatus @default(active)
+
+  // Relations
+  institution Institution @relation(fields: [institution_id], references: [id])
+  activity    Activity    @relation(fields: [activity_id], references: [id])
+
+  @@map("institution_activity")
+}
+
+model InstitutionDrive {
+  id                String       @id @default(uuid())
+  institution_id    String
+  drive_id          String
+  is_required       Boolean      @default(false)
+  allowed_sem       Int?
+  cgpa_greater_than Float?
+  created_date      DateTime?    @default(now()) @db.Timestamp(6)
+  updated_date      DateTime?    @default(now()) @db.Timestamp(6)
+  status            EntityStatus @default(active)
+  baseprice         Decimal      @db.Decimal(10, 2)
+
+  // Relations
+  institution Institution @relation(fields: [institution_id], references: [id])
+  drive       Drive       @relation(fields: [drive_id], references: [id])
+
+  @@map("institution_drive")
+}
+
+model CandidateActivity {
+  id                String           @id @default(uuid())
+  candidate_id      String
+  activity_id       String
+  enrollment_date   DateTime?        @default(now()) @db.Timestamp(6)
+  completion_date   DateTime?        @db.Timestamp(6)
+  enrollment_status EnrollmentStatus @default(enrolled)
+  is_selected       Boolean?
+  selection_date    DateTime?        @db.Timestamp(6)
+  score             Float?
+  remarks           String?
+  payment_id        String?
+  created_date      DateTime?        @default(now()) @db.Timestamp(6)
+  updated_date      DateTime?        @default(now()) @db.Timestamp(6)
+  drive_id          String?
+
+  // Relations
+  candidate Candidate @relation(fields: [candidate_id], references: [id], onDelete: Cascade)
+  activity  Activity  @relation(fields: [activity_id], references: [id], onDelete: Cascade)
+  drive     Drive?    @relation(fields: [drive_id], references: [id], onDelete: Cascade)
+
+  @@unique([candidate_id, activity_id])
+  @@map("candidate_activity")
+}
+
+model CandidateDrive {
+  id                String           @id @default(uuid())
+  candidate_id      String
+  drive_id          String
+  application_date  DateTime?        @default(now()) @db.Timestamp(6)
+  enrollment_status EnrollmentStatus @default(enrolled)
+  is_selected       Boolean?
+  selection_date    DateTime?        @db.Timestamp(6)
+  remarks           String?
+  payment_id        String?
+  created_date      DateTime?        @default(now()) @db.Timestamp(6)
+  updated_date      DateTime?        @default(now()) @db.Timestamp(6)
+  enrollment_date   DateTime?        @db.Timestamp(6)
+
+  // Relations
+  candidate Candidate @relation(fields: [candidate_id], references: [id], onDelete: Cascade)
+  drive     Drive     @relation(fields: [drive_id], references: [id], onDelete: Cascade)
+
+  @@unique([candidate_id, drive_id])
+  @@map("candidate_drive")
+}
+
+model Hobby {
+  id           String    @id @default(uuid())
+  name         String
+  desc         String?
+  created_date DateTime? @default(now()) @db.Timestamp(6)
+  updated_date DateTime? @default(now()) @db.Timestamp(6)
+
+  @@map("hobby")
+}
+
+model Notification {
+  id           String    @id @default(uuid())
+  user_id      String
+  message      String
+  is_read      Boolean   @default(false)
+  created_date DateTime? @default(now()) @db.Timestamp(6)
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("notification")
+}
+
+model ActivityLog {
+  id          String    @id @default(uuid())
+  user_id     String
+  action      String
+  entity_type String
+  entity_id   String
+  timestamp   DateTime? @default(now()) @db.Timestamp(6)
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("activity_log")
+}
+
+model Approval {
+  id            String       @id @default(uuid())
+  user_id       String
+  approval_type String
+  old_target_id String?
+  target_id     String
+  created_date  DateTime?    @default(now()) @db.Timestamp(6)
+  status        EntityStatus @default(pending)
+  updated_date  DateTime?    @default(now()) @db.Timestamp(6)
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("approval")
+}
+
+model Message {
+  id           String    @id @default(uuid())
+  name         String
+  email        String
+  message      String
+  created_date DateTime? @default(now()) @db.Timestamp(6)
+  updated_date DateTime? @default(now()) @db.Timestamp(6)
+
+  @@map("message")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or "postgresql" etc.
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String?        @unique
+  role          String         @default("candidate") // "admin" or "candidate"
+  status        String         @default("onboarding") // "pending", "completed"
+  emailVerified DateTime?
+  image         String?
+  first_name    String?
+  last_name     String?
+  candidates    Candidate[]
+  notifications Notification[]
+  activity_logs ActivityLog[]
+  approvals     Approval[]
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model AdminEmail {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  created_date DateTime? @default(now()) @db.Timestamp(6)
+  updated_date DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model CollegeAdmin {
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  institution_id String
+  created_date   DateTime? @default(now()) @db.Timestamp(6)
+  updated_date   DateTime? @default(now()) @db.Timestamp(6)
+}
+
+model CandidatePayment {
+  id               String          @id @default(uuid())
+  candidate_id     String
+  // link to candidate and the entity this payment is for
+  activity_id      String? // optional FK to Activity if payment is for a standalone activity
+  drive_id         String? // optional FK to Drive if payment is for a drive
+  payment_id       String? // optional FK to gateway Payment record
+  amount           Decimal?        @db.Decimal(10, 2)
+  currency         String          @default("INR")
+  status           PaymentStatus   @default(pending)
+  transaction_type TransactionType
+  created_date     DateTime?       @default(now()) @db.Timestamp(6)
+  updated_date     DateTime?       @default(now()) @db.Timestamp(6)
+
+  // Relations
+  candidate Candidate @relation(fields: [candidate_id], references: [id], onDelete: Cascade)
+  activity  Activity? @relation(fields: [activity_id], references: [id])
+  payment   Payment?  @relation(fields: [payment_id], references: [id], onDelete: SetNull)
+  drive     Drive?    @relation(fields: [drive_id], references: [id])
+
+  @@index([candidate_id])
+  @@index([payment_id])
+  @@index([activity_id])
+  @@index([drive_id])
+  @@map("candidate_payment")
+}

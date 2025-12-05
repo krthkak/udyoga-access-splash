@@ -1,0 +1,210 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-udyoga-blue: #205683;
+  --color-udyoga-green: #7bbb41;
+  --color-udyoga-yellow: #f3d977;
+  --color-udyoga-accent: #aa767d;
+  --color-udyoga-blue-100: #e9eef3;
+
+  --text-udyoga-blue: #205683;
+  --text-udyoga-green: #7bbb41;
+  --text-udyoga-yellow: #f3d977;
+  --text-udyoga-accent: #aa767d;
+
+  --font-poppins-sans: "Poppins", "Poppins Fallback";
+  --font-inter: "Inter", "Inter Fallback";
+}
+
+body {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  background-image: linear-gradient(#ffffff, #e6edf3);
+}
+
+.footer {
+  /* background-image: url("/assets/images/backgrounds/wave.svg"); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: var(--text-udyoga-blue);
+  padding-block: 3rem;
+}
+
+.tiptap {
+  :first-child {
+    margin-top: 0;
+  }
+
+  /* List styles */
+  ul,
+  ol {
+    padding: 0 1rem;
+    margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+    li p {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
+    }
+  }
+
+  /* Heading styles */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+
+  /* Code and preformatted text styles */
+  code {
+    background-color: var(--purple-light);
+    border-radius: 0.4rem;
+    color: var(--black);
+    font-size: 0.85rem;
+    padding: 0.25em 0.3em;
+  }
+
+  pre {
+    background: var(--black);
+    border-radius: 0.5rem;
+    color: var(--white);
+    font-family: "JetBrainsMono", monospace;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1rem;
+
+    code {
+      background: none;
+      color: inherit;
+      font-size: 0.8rem;
+      padding: 0;
+    }
+  }
+
+  blockquote {
+    border-left: 3px solid var(--gray-3);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--gray-2);
+    margin: 2rem 0;
+  }
+}
+
+.ticket-shape {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg);
+}
+
+.ticket-shape::before,
+.ticket-shape::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.ticket-shape::before {
+  top: 25%;
+  border-width: 5px 5px 5px 0;
+  border-color: transparent var(--bg) transparent transparent;
+  transform: translateX(-1px);
+  background: transparent;
+}
+
+.ticket-shape::after {
+  bottom: 25%;
+  border-width: 5px 5px 5px 0;
+  border-color: transparent var(--bg) transparent transparent;
+  transform: translateX(-1px);
+  background: transparent;
+}
+
+/* styles.css or globals.css */
+
+.rich-text-editor .ProseMirror {
+  font-family: var(--font-inter);
+  line-height: 1.6;
+}
+
+.rich-text-editor .ProseMirror h1,
+.rich-text-editor .ProseMirror h2,
+.rich-text-editor .ProseMirror h3,
+.rich-text-editor .ProseMirror h4,
+.rich-text-editor .ProseMirror h5,
+.rich-text-editor .ProseMirror h6 {
+  font-family: var(--font-poppins-sans);
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.rich-text-editor .ProseMirror p,
+.rich-text-editor .ProseMirror li,
+.rich-text-editor .ProseMirror blockquote {
+  font-family: var(--font-inter);
+}
+
+/* Ensure full-height layout and smooth anchor scrolling */
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure anchor targets aren't hidden behind the fixed header.
+   Adjust values if your header height changes. */
+section[id] {
+  scroll-margin-top: 4rem; /* mobile fallback */
+}
+
+@media (min-width: 768px) {
+  section[id] {
+    scroll-margin-top: 5rem; /* desktop: ~80px */
+  }
+}
