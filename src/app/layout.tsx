@@ -4,9 +4,9 @@ import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "../components/layout/footer";
-import Analytics from "@/components/ui/analytics";
-import ProviderWrapper from "@/components/contexts/sessionProviderWrapper";
-import { Toaster } from "sonner";
+// import Analytics from "@/components/ui/analytics";
+// import ProviderWrapper from "@/components/contexts/sessionProviderWrapper";
+// import { Toaster } from "sonner";
 
 const poppins = Poppins({
   variable: "--font-poppins-sans",
@@ -35,14 +35,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${inter.variable} antialiased`}>
-        <ProviderWrapper>
-          <>
-            <Toaster richColors position="top-right" />
-            <Analytics gtmId="GTM-N5GNVDMQ" user={user} />
-            {children}
-            <Footer />
-          </>
-        </ProviderWrapper>
+        {/* <ProviderWrapper> */}
+        <>
+          {/* <Toaster richColors position="top-right" /> */}
+          {/* <Analytics gtmId="GTM-N5GNVDMQ" user={user} /> */}
+          {children}
+          <Footer />
+        </>
+        {/* </ProviderWrapper> */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"

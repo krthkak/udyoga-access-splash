@@ -19,7 +19,7 @@ import {
   Briefcase,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link"; // Disabled for landing page only mode
 
 const quotes: Array<QuoteProps> = [
   {
@@ -72,14 +72,14 @@ export default function Home() {
     <>
       <header className="flex justify-between items-center px-4 md:px-6 lg:px-8 fixed w-full z-50 bg-white/95 backdrop-blur-sm shadow-md border-b border-gray-200">
         <div className="flex items-center gap-4">
-          <Link href={"/"}>
-            <Image
-              src={"/assets/logos/logo.png"}
-              alt="udyoga-access"
-              width={100}
-              height={80}
-            />
-          </Link>
+          {/* <Link href={"/"}> */}
+          <Image
+            src={"/assets/logos/logo.png"}
+            alt="udyoga-access"
+            width={100}
+            height={80}
+          />
+          {/* </Link> */}
 
           {/* Desktop nav */}
           <nav className="hidden md:block">
@@ -104,11 +104,11 @@ export default function Home() {
                   Portfolio
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#contact" className="text-sm font-medium">
                   Contact
                 </a>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </div>
@@ -124,7 +124,16 @@ export default function Home() {
           </Link>
         </div> */}
       </header>
-      <main className="flex flex-col gap-8 row-start-2 w-full pt-32">
+
+      {/* Coming Soon Notice */}
+      <div className="fixed top-[100px] w-full z-40 bg-linear-to-r from-udyoga-blue/10 to-udyoga-green/10 border-b border-udyoga-blue/20">
+        <p className="text-center py-2 text-sm md:text-base text-gray-700">
+          <span className="font-semibold">Udyoga Access is on its way</span> — a
+          platform designed to connect talent with meaningful opportunities.
+        </p>
+      </div>
+
+      <main className="flex flex-col gap-8 row-start-2 w-full pt-40">
         <section
           id="home"
           className="bg-cover lg:bg-auto lg:bg-[url('/assets/images/backgrounds/hero-bg.svg')] bg-no-repeat bg-position-[15%_bottom] md:bg-position-[right_15%] lg:bg-position-[right_25%] md:items-end lg:items-start lg:h-[70vh] flex-col md:flex-row flex px-4 md:px-6 lg:px-8 "
@@ -241,9 +250,9 @@ export default function Home() {
                   market.
                 </p>
                 <div className="mt-4">
-                  <Link href="/candidate/activities">
+                  {/* <Link href="/candidate/activities">
                     <Button variant="ghost">View Programs</Button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 
@@ -259,9 +268,9 @@ export default function Home() {
                   employer engagement to improve placement outcomes.
                 </p>
                 <div className="mt-4">
-                  <Link href="/candidate/drives">
+                  {/* <Link href="/candidate/drives">
                     <Button variant="ghost">Placement Drives</Button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 
@@ -277,9 +286,9 @@ export default function Home() {
                   bridge the gap between classroom learning and workplace needs.
                 </p>
                 <div className="mt-4">
-                  <Link href="#works">
+                  {/* <Link href="#works">
                     <Button variant="ghost">See Events</Button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 
@@ -295,9 +304,9 @@ export default function Home() {
                   industry partners giving students real project exposure.
                 </p>
                 <div className="mt-4">
-                  <Link href="/candidate/activities">
+                  {/* <Link href="/candidate/activities">
                     <Button variant="ghost">Find Internships</Button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 
@@ -312,9 +321,9 @@ export default function Home() {
                   readiness programs.
                 </p>
                 <div className="mt-4">
-                  <Link href="/candidate/profile">
+                  {/* <Link href="/candidate/profile">
                     <Button variant="ghost">Learn About OJT</Button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>
@@ -364,7 +373,8 @@ export default function Home() {
             </Carousel>
           </section>
         </section>
-        <section id="contact" className="px-4 md:px-6 lg:px-8 mb-16">
+        {/* Contact section removed */}
+        {/* <section id="contact" className="px-4 md:px-6 lg:px-8 mb-16">
           <h3 className="font-poppins-sans font-bold text-4xl text-center pb-2">
             Ready to Build Your Future?
           </h3>
@@ -405,7 +415,7 @@ export default function Home() {
               </section>
             </section>
           </form>
-        </section>
+        </section> */}
       </main>
     </>
   );

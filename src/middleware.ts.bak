@@ -1,4 +1,6 @@
 // app/middleware.ts
+// Middleware disabled for landing page only mode
+/*
 import { NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 import type { NextRequestWithAuth } from "next-auth/middleware";
@@ -132,3 +134,4 @@ export const middleware = withAuth(customMiddleware, {
 export const config = {
   matcher: ["/admin/:path*", "/candidate/:path*", "/api/:path*"],
 };
+*/
