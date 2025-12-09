@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     "Udyoga Access integrates learning, professional training, and career development into one seamless platform to prepare students for future employment opportunities.",
 };
 
-const user = undefined;
+// const user = undefined; // Not needed for landing page
 
 export default function RootLayout({
   children,

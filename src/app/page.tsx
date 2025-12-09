@@ -1,17 +1,17 @@
 import React from "react";
 
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button"; // Not used in landing page
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
 import CompanyLogo, { CompanyLogoProps } from "@/components/ui/companyLogo";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input"; // Not used in landing page
 import QuoteCard, { QuoteProps } from "@/components/ui/quoteCard";
-import { Textarea } from "@/components/ui/textarea";
+// import { Textarea } from "@/components/ui/textarea"; // Not used in landing page
 import {
-  ArrowRight,
+  // ArrowRight, // Not used in landing page
   MonitorPlay,
   BookOpen,
   Users,
@@ -23,43 +23,28 @@ import Image from "next/image";
 
 const quotes: Array<QuoteProps> = [
   {
-    text: "I stopped fearing failure. I started creating. This platform changed the way I learn.",
-    subText: "— Sara, Computer Science Graduate",
+    text: "The hands-on projects helped me land my first job. I finally understood how classroom knowledge applies in real work environments.",
+    subText: "— Priya Sharma, Software Developer",
     quoteColor: "purple",
   },
   {
-    text: "I stopped fearing failure. I started creating. This platform changed the way I learn.",
-    subText: "— Sara, Computer Science Graduate",
+    text: "I used to struggle with interviews, but the mock sessions and career counseling gave me the confidence I needed. Got placed within 3 months!",
+    subText: "— Rahul Verma, Data Analyst",
     quoteColor: "blue",
   },
   {
-    text: "I stopped fearing failure. I started creating. This platform changed the way I learn.",
-    subText: "— Sara, Computer Science Graduate",
+    text: "The mentorship program was invaluable. Having industry experts guide me through real-world challenges made all the difference in my career preparation.",
+    subText: "— Anjali Reddy, Marketing Professional",
     quoteColor: "green",
   },
   {
-    text: "I stopped fearing failure. I started creating. This platform changed the way I learn.",
-    subText: "— Sara, Computer Science Graduate",
+    text: "From confused graduate to confident professional - the skill development courses and internship opportunities transformed my career trajectory completely.",
+    subText: "— Aditya Kumar, Business Analyst",
     quoteColor: "yellow",
   },
 ];
 
 const collaborations: Array<CompanyLogoProps> = [
-  {
-    companyName: "AISECT",
-    logoUrl:
-      "https://aisect.org/wp-content/uploads/al_opt_content/IMAGE/aisect.org/wp-content/uploads/2022/09/aisect-logo.png.bv.webp",
-  },
-  {
-    companyName: "AISECT",
-    logoUrl:
-      "https://aisect.org/wp-content/uploads/al_opt_content/IMAGE/aisect.org/wp-content/uploads/2022/09/aisect-logo.png.bv.webp",
-  },
-  {
-    companyName: "AISECT",
-    logoUrl:
-      "https://aisect.org/wp-content/uploads/al_opt_content/IMAGE/aisect.org/wp-content/uploads/2022/09/aisect-logo.png.bv.webp",
-  },
   {
     companyName: "AISECT",
     logoUrl:
@@ -71,7 +56,7 @@ export default function Home() {
   return (
     <>
       <header className="flex justify-between items-center px-4 md:px-6 lg:px-8 fixed w-full z-50 bg-white/95 backdrop-blur-sm shadow-md border-b border-gray-200">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 w-full justify-between ">
           {/* <Link href={"/"}> */}
           <Image
             src={"/assets/logos/logo.png"}
