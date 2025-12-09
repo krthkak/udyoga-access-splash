@@ -1,0 +1,45 @@
+<svg width="100%" height="100%" id="svg" viewBox="0 0 1440 490" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out delay-150"><style>
+          .path-0{
+            animation:pathAnim-0 4s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+          }
+          @keyframes pathAnim-0{
+            0%{
+              d: path("M 0,500 L 0,0 C 297.5,73 595,146 835,146 C 1075,146 1257.5,73 1440,0 L 1440,500 L 0,500 Z");
+            }
+            25%{
+              d: path("M 0,500 L 0,0 C 235.5,77.5 471,155 711,155 C 951,155 1195.5,77.5 1440,0 L 1440,500 L 0,500 Z");
+            }
+            50%{
+              d: path("M 0,500 L 0,0 C 307,73 614,146 854,146 C 1094,146 1267,73 1440,0 L 1440,500 L 0,500 Z");
+            }
+            75%{
+              d: path("M 0,500 L 0,0 C 299,84 598,168 838,168 C 1078,168 1259,84 1440,0 L 1440,500 L 0,500 Z");
+            }
+            100%{
+              d: path("M 0,500 L 0,0 C 297.5,73 595,146 835,146 C 1075,146 1257.5,73 1440,0 L 1440,500 L 0,500 Z");
+            }
+          }</style><path d="M 0,500 L 0,0 C 297.5,73 595,146 835,146 C 1075,146 1257.5,73 1440,0 L 1440,500 L 0,500 Z" stroke="none" stroke-width="0" fill="#e9eef3" fill-opacity="0.53" class="transition-all duration-300 ease-in-out delay-150 path-0"></path><style>
+          .path-1{
+            animation:pathAnim-1 4s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+          }
+          @keyframes pathAnim-1{
+            0%{
+              d: path("M 0,500 L 0,0 C 231,117.5 462,235 702,235 C 942,235 1191,117.5 1440,0 L 1440,500 L 0,500 Z");
+            }
+            25%{
+              d: path("M 0,500 L 0,0 C 190,142 380,284 620,284 C 860,284 1150,142 1440,0 L 1440,500 L 0,500 Z");
+            }
+            50%{
+              d: path("M 0,500 L 0,0 C 247.5,162.5 495,325 735,325 C 975,325 1207.5,162.5 1440,0 L 1440,500 L 0,500 Z");
+            }
+            75%{
+              d: path("M 0,500 L 0,0 C 260.5,116.5 521,233 761,233 C 1001,233 1220.5,116.5 1440,0 L 1440,500 L 0,500 Z");
+            }
+            100%{
+              d: path("M 0,500 L 0,0 C 231,117.5 462,235 702,235 C 942,235 1191,117.5 1440,0 L 1440,500 L 0,500 Z");
+            }
+          }</style><path d="M 0,500 L 0,0 C 231,117.5 462,235 702,235 C 942,235 1191,117.5 1440,0 L 1440,500 L 0,500 Z" stroke="none" stroke-width="0" fill="#205683" fill-opacity="1" class="transition-all duration-300 ease-in-out delay-150 path-1"></path></svg>
