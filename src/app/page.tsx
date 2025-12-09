@@ -121,7 +121,7 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 w-full pt-40">
         <section
           id="home"
-          className="bg-cover lg:bg-auto lg:bg-[url('/assets/images/backgrounds/hero-bg.svg')] bg-no-repeat bg-position-[15%_bottom] md:bg-position-[right_15%] lg:bg-position-[right_25%] md:items-end lg:items-start lg:h-[70vh] flex-col md:flex-row flex px-4 md:px-6 lg:px-8 "
+          className="hero-section bg-cover lg:bg-auto bg-no-repeat bg-position-[15%_bottom] md:bg-position-[right_15%] lg:bg-position-[right_25%] md:items-end lg:items-start lg:h-[70vh] flex-col md:flex-row flex px-4 md:px-6 lg:px-8 "
         >
           <h1 className="font-poppins-sans font-bold text-2xl md:text-6xl lg:text-9xl lg:leading-[0.9] mb-4 md:mb-0">
             Learn <br />

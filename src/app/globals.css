@@ -208,3 +208,14 @@ section[id] {
     scroll-margin-top: 5rem; /* desktop: ~80px */
   }
 }
+
+/* Hero section background */
+.hero-section {
+  background-image: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-section {
+    background-image: url('/udyoga-access-splash/assets/images/backgrounds/hero-bg.svg');
+  }
+}

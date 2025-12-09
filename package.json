@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack ",
-    "build": "next build --turbopack",
-    "start": "next start"
+    "start": "next start",
+    "build": "next build",
+    "deploy": "gh-pages -d out"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -51,6 +52,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9.39.0",
     "eslint-plugin-react": "^7.37.5",
+    "gh-pages": "^6.3.0",
     "globals": "^16.4.0",
     "jiti": "^2.6.1",
     "prisma": "^6.19.0",

@@ -14,6 +14,8 @@ const nextConfig: NextConfig = {
     unoptimized: true, // Required for static export
     domains: ["aisect.org"],
   },
+  basePath: "/udyoga-access-splash",
+  assetPrefix: "/udyoga-access-splash",
 };
 
 export default nextConfig;
